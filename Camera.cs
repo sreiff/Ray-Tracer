@@ -5,7 +5,7 @@ namespace raytracer {
 		public Vector direction;
 		public Vector right;
 	
-		public static Camera New(Vector pos, Vector dir) {
+		public Camera(Vector pos, Vector dir) {
 			Camera c = new Camera();
 			c.position 	= pos;
 			c.direction 	= Vector.Norm(Vector.Minus(dir, pos));
