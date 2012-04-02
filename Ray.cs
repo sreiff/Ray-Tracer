@@ -5,10 +5,9 @@ using System.Text;
 
 namespace raytracer
 {
-    class Intersect
+    class Ray
     {
-        public SObject obj;
-        public Ray ray;
-        public double distance;
+        public Vector origin;
+        public Vector dir;
     }
 }
