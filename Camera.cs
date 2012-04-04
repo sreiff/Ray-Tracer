@@ -10,11 +10,11 @@ namespace raytracer {
          * @param <Vector> pos
          * @param <Vector> dir
          */
-		public Camera(Vector pos, Vector dir) {
-			position 	= pos;
-			direction 	= Vector.Norm(Vector.Minus(dir, pos));
-			right		= Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, new Vector(0, -1, 0))));
-			up		    = Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, c.right)));
-		}
+        public Camera(Vector pos, Vector dir) {
+            position 	= pos;
+            direction 	= Vector.Norm(Vector.Minus(dir, pos));
+            right		= Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, new Vector(0, -1, 0))));
+            up		    = Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, c.right)));
+        }
 	}
 }
