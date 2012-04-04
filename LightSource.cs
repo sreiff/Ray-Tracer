@@ -4,9 +4,7 @@
     {
 
         public Vector position;
-
         public Color color;
-
         public Vector direction;
 
 
