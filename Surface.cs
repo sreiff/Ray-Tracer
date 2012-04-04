@@ -3,9 +3,9 @@ using System;
 namespace raytracer {
 	static class Surfaces {
 		/**
-		 * A series of surfaces that are used throughout the codebase.
+         * A series of surfaces that are used throughout the codebase.
          * @var <Surface> ReflectiveRed
-		 */
+         */
 		public static readonly Surface ReflectiveRed = new Surface() {
 			color 		= new Color(1, 0, 0),
 			diffuse 	= pos => new Color(1, 1, 1),
