@@ -1,28 +1,27 @@
 ﻿namespace raytracer
 {
-
     class Triangle : SObject
     {
-
         public Vector Position1;
-
         public Vector Position2;
-
         public Vector Position3;
 
-
-        //Found idea for this code here... http://create.msdn.com/en-US/education/catalog/sample/picking_triangle
+        /**
+         * Find the intersect of the given Ray and the triangle. Special thanks
+         * to the msdn link below:
+         * http://create.msdn.com/en-US/education/catalog/sample/picking_triangle
+         * 
+         * @param <Ray> iRay
+         * @return <Intersect>
+         */
         public override Intersect Intersect(Ray iRay)
         {
             // Compute vectors along two edges of the triangle.
-            Vector edge1, edge2;
-
-            edge1 = Vector.Minus(Position2, Position1);
-            edge2 = Vector.Minus(Position3, Position1);
+            Vector edge1 = Vector.Minus(Position2, Position1);
+            Vector edge2 = Vector.Minus(Position3, Position1);
 
             // Compute the determinant.
             Vector directionCrossEdge2 = Vector.Cross(iRay.dir, edge2);
-
             float determinant = (float)Vector.Dot(edge1, directionCrossEdge2);
 
             // If the ray is parallel to the triangle plane, there is no collision.
@@ -35,7 +34,6 @@
 
             // Calculate the U parameter of the intersection point.
             Vector distanceVector = Vector.Minus(iRay.origin, Position1);
-
             float triangleU = (float)Vector.Dot(distanceVector, directionCrossEdge2);
             triangleU *= inverseDeterminant;
 
@@ -67,18 +65,19 @@
                return null;
             }
 
-            return new Intersect() { obj=this, ray=iRay, distance=rayDistance };
-            
 
+            return new Intersect() { obj=this, ray=iRay, distance=rayDistance };
         }
 
-
+        /**
+         * Calculate the normal vector of the triangle at the given position.
+         * @param <Vector> pos
+         * @return <Vector>
+         */
         public override Vector Normal(Vector pos)
         {
             Vector edge1 = Vector.Minus(Position2,Position1);
             Vector edge2 = Vector.Minus(Position3 ,Position1);
-
-            // Might be wrong found it here:http://stackoverflow.com/questions/2414762/calculating-the-perpendicular-plane-to-a-triangle-in-3d-space
             Vector normal = Vector.Norm(Vector.Cross(edge1, edge2));
             return normal;
 
