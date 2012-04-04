@@ -2,6 +2,11 @@
 {
     class Triangle : SObject
     {
+        /*
+         *  Points must follow right hand rule for normal to work
+         *  P1 -> P2 -> P3 must be counter clockwise
+         * 
+         * */
         public Vector Position1;
         public Vector Position2;
         public Vector Position3;
@@ -64,7 +69,6 @@
             {
                return null;
             }
-
 
             return new Intersect() { obj=this, ray=iRay, distance=rayDistance };
         }
