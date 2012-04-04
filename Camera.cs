@@ -5,14 +5,16 @@ namespace raytracer {
 		public Vector direction;
 		public Vector right;
 	
+        /**
+         * Constructor
+         * @param <Vector> pos
+         * @param <Vector> dir
+         */
 		public Camera(Vector pos, Vector dir) {
-			Camera c = new Camera();
-			c.position 	= pos;
-			c.direction 	= Vector.Norm(Vector.Minus(dir, pos));
-			c.right		= Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, new Vector(0, -1, 0))));
-			c.up		= Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, c.right)));
-	
-			return c;
+			position 	= pos;
+			direction 	= Vector.Norm(Vector.Minus(dir, pos));
+			right		= Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, new Vector(0, -1, 0))));
+			up		    = Vector.Times(1.5, Vector.Norm(Vector.Cross(direction, c.right)));
 		}
 	}
 }

@@ -10,6 +10,11 @@ namespace raytracer
         public Vector Center;
         public double Radius;
         
+        /**
+         * Find the Intersect of the sphere and the given Ray.
+         * @param <Ray> ray
+         * @return <Intersect>
+         */
         public override Intersect Intersect(Ray ray)
         {
             Vector eo = Vector.Minus(Center, ray.origin);
@@ -40,6 +45,11 @@ namespace raytracer
             return new Intersect() { obj = this, ray = ray, distance = dist };
         }
 
+        /**
+         * Find the normal vector of the sphere at the given position.
+         * @param <Vector> pos
+         * @return <Vector>
+         */
         public override Vector Normal(Vector pos)
         {
             return Vector.Norm(Vector.Minus(pos, Center));
