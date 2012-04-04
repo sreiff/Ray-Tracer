@@ -68,8 +68,6 @@
             }
 
             return new Intersect() { obj=this, ray=iRay, distance=rayDistance };
-            
-
         }
 
 
