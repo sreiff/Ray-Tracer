@@ -2,11 +2,14 @@
 {
     class Triangle : SObject
     {
-        /*
-         *  Points must follow right hand rule for normal to work
-         *  P1 -> P2 -> P3 must be counter clockwise
+        /**
+         * Points must follow right hand rule for normal to work
+         *      P1 -> P2 -> P3 must be counter clockwise
          * 
-         * */
+         * @var <Vector> Position1
+         * @var <Vector> Position2
+         * @var <Vector> Position3
+         **/
         public Vector Position1;
         public Vector Position2;
         public Vector Position3;
