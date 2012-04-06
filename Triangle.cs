@@ -12,64 +12,46 @@
         public Vector Position3;
 
         /**
-         * Find the intersect of the given Ray and the triangle. Special thanks
-         * to the msdn link below:
-         * http://create.msdn.com/en-US/education/catalog/sample/picking_triangle
-         * 
+         * Find the intersect of the given Ray and the triangle.
+         * Based on Ray Tracing Lab
+         *  
          * @param <Ray> iRay
          * @return <Intersect>
          */
         public override Intersect Intersect(Ray iRay)
         {
-            // Compute vectors along two edges of the triangle.
-            Vector edge1 = Vector.Minus(Position2, Position1);
-            Vector edge2 = Vector.Minus(Position3, Position1);
+            double rayDistance = 0.0;
+            //  t = d-n*P / d*n
+            double t = Vector.Dot(Vector.Minus(iRay.dir, this.Normal(null)), iRay.origin) / Vector.Dot(iRay.dir,this.Normal(null));
+            // Q = P + td
+            Vector Q = Vector.Plus(iRay.origin, Vector.Scale(iRay.dir,t));
 
-            // Compute the determinant.
-            Vector directionCrossEdge2 = Vector.Cross(iRay.dir, edge2);
-            float determinant = (float)Vector.Dot(edge1, directionCrossEdge2);
 
-            // If the ray is parallel to the triangle plane, there is no collision.
-            if (determinant > -float.Epsilon && determinant < float.Epsilon)
+            Vector BA = Vector.Minus(Position2,Position1);
+            Vector QA = Vector.Minus(Q,Position1);
+            Vector CB = Vector.Minus(Position3,Position2);
+            Vector QB = Vector.Minus(Q,Position2);
+            Vector AC = Vector.Minus(Position1,Position3);
+            Vector QC = Vector.Minus(Q,Position3);
+
+            //[(B-A)X(Q-A)] dot n >=0
+            if (Vector.Dot(Vector.Cross(BA, QA),this.Normal(null)) < 0)
             {
-               return null;
+                return null;
             }
-
-            float inverseDeterminant = 1.0f / determinant;
-
-            // Calculate the U parameter of the intersection point.
-            Vector distanceVector = Vector.Minus(iRay.origin, Position1);
-            float triangleU = (float)Vector.Dot(distanceVector, directionCrossEdge2);
-            triangleU *= inverseDeterminant;
-
-            // Make sure it is inside the triangle.
-            if (triangleU < 0 || triangleU > 1)
+            //[(C-B)X(Q-B)] dot n >=0
+            if (Vector.Dot(Vector.Cross(CB, QB), this.Normal(null)) < 0)
+            {
+                return null;
+            }
+            //[(A-C)X(Q-C)] dot n >=0
+            if (Vector.Dot(Vector.Cross(AC, QC), this.Normal(null)) < 0)
             {
                 return null;
             }
 
-            // Calculate the V parameter of the intersection point.
-            Vector distanceCrossEdge1 = Vector.Cross(distanceVector,edge1);
-
-            float triangleV = (float)Vector.Dot(iRay.dir, distanceCrossEdge1);
-            triangleV *= inverseDeterminant;
-
-            // Make sure it is inside the triangle.
-            if (triangleV < 0 || triangleU + triangleV > 1)
-            {
-                return null;
-            }
-
-            // Compute the distance along the ray to the triangle.
-            float rayDistance = (float)Vector.Dot(edge2, distanceCrossEdge1);
-            rayDistance *= inverseDeterminant;
-
-            // Is the triangle at or behind the ray origin?
-            if (rayDistance <= 0)
-            {
-               return null;
-            }
-
+            //Calc distance and return intersection
+            rayDistance = Vector.Mag(Vector.Minus(Q,iRay.origin));
             return new Intersect() { obj=this, ray=iRay, distance=rayDistance };
         }
 

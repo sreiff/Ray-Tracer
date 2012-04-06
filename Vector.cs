@@ -20,17 +20,6 @@ namespace raytracer
         public Vector(double x, double y, double z) { X = x; Y = y; Z = z; }
 
         /**
-         * Multiply a vector by the input value.
-         * @param <Vector> n
-         * @param <Vector> v
-         * @return <Vector>
-         */
-        public static Vector Times(double n, Vector v)
-        {
-            return new Vector(v.X * n, v.Y * n, v.Z * n);
-        }
-
-        /**
          * Subtract one vector from another.
          * @param <Vector> v1
          * @param <Vector> v2
@@ -79,7 +68,7 @@ namespace raytracer
         {
             double mag = Mag(v);
             double div = mag == 0 ? double.PositiveInfinity : 1 / mag;
-            return Times(div, v);
+            return Scale(v,div);
         }
 
         /**
@@ -91,6 +80,17 @@ namespace raytracer
         public static Vector Cross(Vector v1, Vector v2)
         {
             return new Vector(((v1.Y * v2.Z) - (v1.Z * v2.Y)), ((v1.Z * v2.X) - (v1.X * v2.Z)), ((v1.X * v2.Y) - (v1.Y * v2.X)));
+        }
+
+        /**
+         * Scale a vector
+         * @param <Vector> v
+         * @param <double> x
+         * @return <Vector>
+         */
+        public static Vector Scale(Vector v, double x)
+        {
+            return new Vector(v.X *x, v.Y*x,v.Z*x);
         }
 
         /**
