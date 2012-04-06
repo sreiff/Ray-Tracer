@@ -25,7 +25,7 @@
         {
             double rayDistance = 0.0;
             //  t = d-n*P / d*n
-            double t = Vector.Dot(Vector.Minus(iRay.dir, this.Normal(null)), iRay.origin) / Vector.Dot(iRay.dir,this.Normal(null));
+            double t = Vector.Dot(Vector.Minus(iRay.dir, this.Normal()), iRay.origin) / Vector.Dot(iRay.dir,this.Normal());
             // Q = P + td
             Vector Q = Vector.Plus(iRay.origin, Vector.Scale(iRay.dir,t));
 
@@ -38,17 +38,11 @@
             Vector QC = Vector.Minus(Q,Position3);
 
             //[(B-A)X(Q-A)] dot n >=0
-            if (Vector.Dot(Vector.Cross(BA, QA),this.Normal(null)) < 0)
-            {
-                return null;
-            }
             //[(C-B)X(Q-B)] dot n >=0
-            if (Vector.Dot(Vector.Cross(CB, QB), this.Normal(null)) < 0)
-            {
-                return null;
-            }
             //[(A-C)X(Q-C)] dot n >=0
-            if (Vector.Dot(Vector.Cross(AC, QC), this.Normal(null)) < 0)
+            if ((Vector.Dot(Vector.Cross(BA, QA),this.Normal()) < 0) ||
+                (Vector.Dot(Vector.Cross(CB, QB), this.Normal()) < 0) ||
+                (Vector.Dot(Vector.Cross(AC, QC), this.Normal()) < 0))
             {
                 return null;
             }
@@ -72,6 +66,13 @@
 
         }
 
+        /**
+         * Helper function simplifying the call to the Normal() function.
+         * @return <Vector>
+         */
+        public Vector Normal()
+        {
+            return this.Normal(null);
+        }
     }
-
 }
